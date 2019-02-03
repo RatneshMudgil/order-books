@@ -1,5 +1,15 @@
 package com.cs.testapplication.orderbooks.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
 import com.cs.testapplication.orderbooks.entity.Order;
 import com.cs.testapplication.orderbooks.entity.OrderBook;
 import com.cs.testapplication.orderbooks.enums.Constants;
@@ -8,11 +18,6 @@ import com.cs.testapplication.orderbooks.repository.OrderRepository;
 import com.cs.testapplication.orderbooks.responsedto.OrderBookResponseDto;
 import com.cs.testapplication.orderbooks.responsedto.OrderResponseDto;
 import com.cs.testapplication.orderbooks.service.OrderService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 @Component
 public class OrderServiceImpl implements OrderService {
@@ -87,7 +92,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDto getBiggestOrderDetail() {
-        orderRepository.getBiggestOrderDetail();
+    public List<OrderResponseDto> getBiggestOrderDetail() {
+        List<Order> orderList = orderRepository.getBiggestOrderDetail();
+        
+        if(CollectionUtils.isEmpty(orderList)){
+        	return null;
+        }
+        List<OrderResponseDto> orderResponseDtoList = new ArrayList<>(); 
+        orderList.forEach(order -> {
+        	orderResponseDtoList.add(mapOrderEntityDtoToWebDto(order));
+        });
+        return orderResponseDtoList;
     }
 }

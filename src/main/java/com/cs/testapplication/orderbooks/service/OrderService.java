@@ -1,5 +1,7 @@
 package com.cs.testapplication.orderbooks.service;
 
+import java.util.List;
+
 import com.cs.testapplication.orderbooks.responsedto.OrderBookResponseDto;
 import com.cs.testapplication.orderbooks.responsedto.OrderResponseDto;
 
@@ -13,5 +15,5 @@ public interface OrderService {
 
     Integer getAmountOfOrdersInOrderbook(String orderBookId);
 
-    OrderResponseDto getBiggestOrderDetail();
+    List<OrderResponseDto> getBiggestOrderDetail();
 }

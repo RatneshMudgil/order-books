@@ -1,8 +1,7 @@
 package com.cs.testapplication.orderbooks.controller;
 
-import com.cs.testapplication.orderbooks.responsedto.OrderBookResponseDto;
-import com.cs.testapplication.orderbooks.responsedto.OrderResponseDto;
-import com.cs.testapplication.orderbooks.service.OrderService;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cs.testapplication.orderbooks.responsedto.OrderBookResponseDto;
+import com.cs.testapplication.orderbooks.responsedto.OrderResponseDto;
+import com.cs.testapplication.orderbooks.service.OrderService;
 
 @RestController
 @RequestMapping("Order")
@@ -71,11 +74,11 @@ public class OrderController {
     @RequestMapping(value = "/getBiggestOrderDetail",
             method = RequestMethod.GET,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderResponseDto> getBiggestOrderDetail(){
+    public ResponseEntity<List<OrderResponseDto>> getBiggestOrderDetail(){
 
         log.info("In the OrderController::getBiggestOrderDetail");
-        OrderResponseDto orderResponseDto = orderService.getBiggestOrderDetail();
+        List<OrderResponseDto> orderResponseDto = orderService.getBiggestOrderDetail();
 
-        return new ResponseEntity<OrderResponseDto>(orderResponseDto, HttpStatus.OK);
+        return new ResponseEntity<List<OrderResponseDto>>(orderResponseDto, HttpStatus.OK);
     }
 }
