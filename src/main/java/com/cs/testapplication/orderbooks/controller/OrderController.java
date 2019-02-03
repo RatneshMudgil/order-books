@@ -28,7 +28,7 @@ public class OrderController {
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<OrderBookResponseDto> getOrderBook(@RequestParam("orderBookId") String orderBookId){
 
-	 log.info("In the OrderController::getOrderBook " + orderBookId);
+	 log.info("In the OrderController::getOrderBook : " + orderBookId);
         OrderBookResponseDto orderBookResponseDto =
                 orderService.getOrderBookDetails(orderBookId);
 		
@@ -40,7 +40,7 @@ public class OrderController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderResponseDto> getOrderDetails(@RequestParam("orderId") String orderId) {
 
-        log.info("In the OrderController::getOrderDetails " + orderId);
+        log.info("In the OrderController::getOrderDetails : " + orderId);
         OrderResponseDto orderResponseDto =
                 orderService.getOrderDetails(orderId);
         return new ResponseEntity<>(orderResponseDto, HttpStatus.OK);
@@ -51,11 +51,31 @@ public class OrderController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateOrderStatus(@RequestParam("financialEntityName") String financialEntityName){
 
-        log.info("In the OrderController::updateOrderStatus " + financialEntityName);
+        log.info("In the OrderController::updateOrderStatus : " + financialEntityName);
         Integer updateStatus = orderService.updateOrderStatusForfinancialEntity(financialEntityName);
 
         return new ResponseEntity<>(updateStatus, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getAmountOfOrders",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> getAmountOfOrders(@RequestParam("orderBookId") String orderBookId){
 
+        log.info("In the OrderController::getAmountOfOrders in a order book : " + orderBookId);
+        Integer updateStatus = orderService.getAmountOfOrdersInOrderbook(orderBookId);
+
+        return new ResponseEntity<>(updateStatus, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getBiggestOrderDetail",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderResponseDto> getBiggestOrderDetail(){
+
+        log.info("In the OrderController::getBiggestOrderDetail");
+        OrderResponseDto orderResponseDto = orderService.getBiggestOrderDetail();
+
+        return new ResponseEntity<OrderResponseDto>(orderResponseDto, HttpStatus.OK);
+    }
 }

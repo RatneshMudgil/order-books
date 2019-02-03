@@ -79,4 +79,15 @@ public class OrderServiceImpl implements OrderService {
 
 		return orderBookResponseDto;
 	}
+
+    @Override
+    public Integer getAmountOfOrdersInOrderbook(String orderBookId) {
+        OrderBook orderBook = orderBookRepository.getOne(Long.parseLong(orderBookId));
+        return orderBook.getOrderList().size();
+    }
+
+    @Override
+    public OrderResponseDto getBiggestOrderDetail() {
+        orderRepository.getBiggestOrderDetail();
+    }
 }

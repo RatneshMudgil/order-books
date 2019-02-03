@@ -10,4 +10,8 @@ public interface OrderService {
     Integer updateOrderStatusForfinancialEntity(String financialInstrumentName);
 
     OrderResponseDto getOrderDetails(String orderId);
+
+    Integer getAmountOfOrdersInOrderbook(String orderBookId);
+
+    OrderResponseDto getBiggestOrderDetail();
 }
