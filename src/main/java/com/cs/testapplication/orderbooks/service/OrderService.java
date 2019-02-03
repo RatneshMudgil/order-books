@@ -16,4 +16,6 @@ public interface OrderService {
     Integer getAmountOfOrdersInOrderbook(String orderBookId);
 
     List<OrderResponseDto> getBiggestOrderDetail();
+    
+    List<OrderResponseDto> getSmallestOrderDetail();
 }

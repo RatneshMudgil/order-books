@@ -104,4 +104,18 @@ public class OrderServiceImpl implements OrderService {
         });
         return orderResponseDtoList;
     }
+    
+    @Override
+    public List<OrderResponseDto> getSmallestOrderDetail() {
+        List<Order> orderList = orderRepository.getSmallestOrderDetail();
+        
+        if(CollectionUtils.isEmpty(orderList)){
+        	return null;
+        }
+        List<OrderResponseDto> orderResponseDtoList = new ArrayList<>(); 
+        orderList.forEach(order -> {
+        	orderResponseDtoList.add(mapOrderEntityDtoToWebDto(order));
+        });
+        return orderResponseDtoList;
+    }
 }

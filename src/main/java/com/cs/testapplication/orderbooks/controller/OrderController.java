@@ -81,4 +81,15 @@ public class OrderController {
 
         return new ResponseEntity<List<OrderResponseDto>>(orderResponseDto, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/getSmallestOrderDetail",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OrderResponseDto>> getSmallestOrderDetail(){
+
+        log.info("In the OrderController::getSmallestOrderDetail");
+        List<OrderResponseDto> orderResponseDto = orderService.getSmallestOrderDetail();
+
+        return new ResponseEntity<List<OrderResponseDto>>(orderResponseDto, HttpStatus.OK);
+    }
 }
