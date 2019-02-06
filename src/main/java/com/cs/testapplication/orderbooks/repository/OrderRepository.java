@@ -15,4 +15,10 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
 	
 	@Query("select o from Order o where o.orderQuantity = (select min(o1.orderQuantity) from Order o1) ")
     List<Order> getSmallestOrderDetail();
+	
+	@Query("select o from Order o where o. ")
+    Order getEarliestOrder();
+
+	@Query("select o from Order o where o. ")
+	Order getLastOrder();
 }

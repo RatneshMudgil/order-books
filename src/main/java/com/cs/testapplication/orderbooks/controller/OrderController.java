@@ -92,4 +92,25 @@ public class OrderController {
 
         return new ResponseEntity<List<OrderResponseDto>>(orderResponseDto, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/getEarliestOrder",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderResponseDto> getEarliestOrder(){
+
+    	log.info("In the OrderController::getEarliestOrder");
+        return new ResponseEntity<OrderResponseDto>(orderService.getEarliestOrder(), HttpStatus.OK);
+    }
+    
+    // Last Order EntryLast
+    @RequestMapping(value = "/getLastOrder",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderResponseDto> getLastOrder(){
+
+    	log.info("In the OrderController::getLastOrder");
+        return new ResponseEntity<OrderResponseDto>(orderService.getLastOrder(), HttpStatus.OK);
+    }
+    
+    // Demand
 }

@@ -52,39 +52,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.findById(Long.parseLong(orderId)).get());
         return orderResponseDto;
     }
-
-    private OrderResponseDto mapOrderEntityDtoToWebDto(Order order) {
-        OrderResponseDto orderResponseDto = new OrderResponseDto();
-        orderResponseDto.setOrderQuantity(order.getOrderQuantity());
-        orderResponseDto.setOrderPrice(order.getOrderPrice());
-        orderResponseDto.setFinancialInstrumentName(order.getFinancialInstrument().getInstrumentName());
-        orderResponseDto.setEntryDate(order.getEntryDate().toInstant());
-        return orderResponseDto;
-    }
-
-    private OrderBookResponseDto mapOrderBookEntityDtoToWebDto(OrderBook orderBook) {
-		// TODO : This could be done by the Builder also, if the DTO is complicated
-		// TODO : Need to put null checks
-
-        OrderBookResponseDto orderBookResponseDto = new OrderBookResponseDto();
-        orderBookResponseDto.setBookStatus(orderBook.getBookStatus().equals(Boolean.TRUE) ? Constants.OPEN.toString()
-                : Constants.CLOSE.toString());
-        orderBookResponseDto.setOrderBookName(orderBook.getOrderBookName());
-        orderBookResponseDto.setUserDetailName(orderBook.getUserDetails().getUserName());
-
-        orderBook.getOrderList().forEach(order -> {
-            OrderResponseDto orderResponseDto = new OrderResponseDto();
-            orderResponseDto.setEntryDate(order.getEntryDate().toInstant());
-            orderResponseDto.setFinancialInstrumentName(order.getFinancialInstrument().getInstrumentName());
-            orderResponseDto.setOrderPrice(order.getOrderPrice());
-            orderResponseDto.setOrderQuantity(order.getOrderQuantity());
-
-            orderBookResponseDto.addOrderResponseDtos(orderResponseDto);
-        });
-
-		return orderBookResponseDto;
-	}
-
+    
     @Override
     public Integer getAmountOfOrdersInOrderbook(String orderBookId) {
         OrderBook orderBook = orderBookRepository.getOne(Long.parseLong(orderBookId));
@@ -118,4 +86,46 @@ public class OrderServiceImpl implements OrderService {
         });
         return orderResponseDtoList;
     }
+    
+    @Override
+    public OrderResponseDto getEarliestOrder() {
+        return mapOrderEntityDtoToWebDto(orderRepository.getEarliestOrder());
+    }
+    
+    @Override
+    public OrderResponseDto getLastOrder() {
+        return mapOrderEntityDtoToWebDto(orderRepository.getLastOrder());
+    }
+
+    private OrderResponseDto mapOrderEntityDtoToWebDto(Order order) {
+        OrderResponseDto orderResponseDto = new OrderResponseDto();
+        orderResponseDto.setOrderQuantity(order.getOrderQuantity());
+        orderResponseDto.setOrderPrice(order.getOrderPrice());
+        orderResponseDto.setFinancialInstrumentName(order.getFinancialInstrument().getInstrumentName());
+        orderResponseDto.setEntryDate(order.getEntryDate().toInstant());
+        return orderResponseDto;
+    }
+
+    private OrderBookResponseDto mapOrderBookEntityDtoToWebDto(OrderBook orderBook) {
+		// TODO : This could be done by the Builder also, if the DTO is complicated
+		// TODO : Need to put null checks
+
+        OrderBookResponseDto orderBookResponseDto = new OrderBookResponseDto();
+        orderBookResponseDto.setBookStatus(orderBook.getBookStatus().equals(Boolean.TRUE) ? Constants.OPEN.toString()
+                : Constants.CLOSE.toString());
+        orderBookResponseDto.setOrderBookName(orderBook.getOrderBookName());
+        orderBookResponseDto.setUserDetailName(orderBook.getUserDetails().getUserName());
+
+        orderBook.getOrderList().forEach(order -> {
+            OrderResponseDto orderResponseDto = new OrderResponseDto();
+            orderResponseDto.setEntryDate(order.getEntryDate().toInstant());
+            orderResponseDto.setFinancialInstrumentName(order.getFinancialInstrument().getInstrumentName());
+            orderResponseDto.setOrderPrice(order.getOrderPrice());
+            orderResponseDto.setOrderQuantity(order.getOrderQuantity());
+
+            orderBookResponseDto.addOrderResponseDtos(orderResponseDto);
+        });
+
+		return orderBookResponseDto;
+	}
 }

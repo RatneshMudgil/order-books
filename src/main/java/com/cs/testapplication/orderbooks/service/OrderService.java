@@ -18,4 +18,8 @@ public interface OrderService {
     List<OrderResponseDto> getBiggestOrderDetail();
     
     List<OrderResponseDto> getSmallestOrderDetail();
+    
+    OrderResponseDto getEarliestOrder();
+
+	OrderResponseDto getLastOrder();
 }
